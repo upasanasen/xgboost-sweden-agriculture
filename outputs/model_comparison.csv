@@ -1,0 +1,5 @@
+model,cv_mae_mean,cv_mae_std,test_mae,test_rmse,test_r2
+Linear Regression,1184.44,62.57,1244.45,3074.75,0.9
+Random Forest,681.1,13.22,723.31,1414.61,0.98
+XGBoost (default),464.7,13.03,467.39,1234.33,0.98
+XGBoost (tuned),438.76,13.15,458.36,1244.54,0.98

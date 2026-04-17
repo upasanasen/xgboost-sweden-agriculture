@@ -1,0 +1,51 @@
+<!--
+  =============================================================
+  XGBoost Sweden — drop-in replacement for project card #04
+  on https://upasanasen.github.io/pm-sustainability-portfolio/
+
+  The XGBoost project already exists as card #04 on your
+  live site, but currently links to your GitHub homepage and
+  has a generic "ML Research" description.
+
+  This rewrite keeps your exact design system (same classes,
+  same palette, same structure as every other card) and
+  updates the card to reflect the finished deliverable:
+    - policy brief PDF (outputs/case_study.pdf)
+    - interactive Sweden map (outputs/sweden_yield_2050_map.html)
+    - full XGBoost pipeline + SHAP extension
+    - test MAE 353 kg/ha, R² 0.98
+
+  HOW TO USE:
+  1. Open index.html
+  2. Find the block that starts with:
+       <a class="project-card" href="https://github.com/upasanasen" target="_blank">
+         <p class="project-num">04 / ML Research · Lund University</p>
+         <h3 class="project-title">Swedish Agriculture 2050 — ML Climate Impact Model</h3>
+         ...
+     (that's your current card #04)
+  3. Replace the entire <a>...</a> block for that card with the
+     snippet between SNIPPET START and SNIPPET END below.
+  4. No CSS changes needed — this uses only classes already in
+     your stylesheet (.project-card, .project-num, .project-title,
+     .project-desc, .project-stack, .stack-tag, .project-links,
+     .project-link).
+  =============================================================
+-->
+
+<!-- ======================= SNIPPET START ======================= -->
+<a class="project-card" href="https://github.com/upasanasen/xgboost-sweden-agriculture" target="_blank">
+  <p class="project-num">04 / Policy Brief &middot; Live on GitHub</p>
+  <h3 class="project-title">Forecasting Swedish Crop Yields to 2050 &mdash; XGBoost &amp; SHAP</h3>
+  <p class="project-desc">Reproduced a Lund master&rsquo;s thesis baseline on Swedish county-level crop yields (21 l&auml;n &times; 18 crops &times; 55 years) and extended it with SHAP explainability, four-model comparison, holdout-tuned hyperparameters, and an interactive RCP&nbsp;8.5 choropleth. Test MAE&nbsp;353&nbsp;kg/ha, R&sup2;&nbsp;0.98. Packaged as a decision-ready brief for N&auml;ringsdepartementet.</p>
+  <div class="project-stack">
+    <span class="stack-tag">Python</span>
+    <span class="stack-tag">XGBoost</span>
+    <span class="stack-tag">SHAP</span>
+    <span class="stack-tag">Plotly</span>
+    <span class="stack-tag">Climate Policy</span>
+  </div>
+  <div class="project-links">
+    <span class="project-link">Open Full Study &rarr;</span>
+  </div>
+</a>
+<!-- ======================== SNIPPET END ======================== -->

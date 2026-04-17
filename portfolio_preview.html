@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preview &mdash; XGBoost card in your portfolio design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ----- Your actual design tokens, lifted verbatim ----- */
+    :root {
+      --ink: #0f1a0f;    --forest: #1a3a1a;  --moss: #2d6a2d;
+      --sage: #4a8c4a;   --leaf: #6ab04c;    --mist: #e8f0e8;
+      --paper: #f5f7f3;  --white: #ffffff;
+      --gold: #c8a84b;   --rust: #8b3a2a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 3.5rem 2.5rem;
+      min-height: 100vh;
+    }
+
+    .preview-wrap { max-width: 1200px; margin: 0 auto; }
+
+    .preview-lead {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 0.75rem;
+    }
+
+    .preview-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--forest);
+      margin-bottom: 1.5rem; line-height: 1.2;
+    }
+
+    .preview-note {
+      font-size: 0.88rem; color: #4a5c4a;
+      font-weight: 300; line-height: 1.7;
+      max-width: 620px; margin-bottom: 3.5rem;
+    }
+
+    .preview-note code {
+      font-family: 'DM Mono', monospace;
+      background: var(--mist); color: var(--moss);
+      padding: 0.1rem 0.4rem; border-radius: 2px;
+      font-size: 0.8rem;
+    }
+
+    /* ----- Project grid, reproducing your live site ----- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(45, 106, 45, 0.12);
+      border: 1px solid rgba(45, 106, 45, 0.12);
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      padding: 2.5rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      transition: background 0.3s ease;
+      min-height: 360px;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--leaf);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover { background: var(--mist); }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--forest);
+      line-height: 1.35; margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-size: 0.85rem; line-height: 1.7;
+      color: #4a5c4a; font-weight: 300;
+      margin-bottom: 1.5rem; flex: 1;
+    }
+
+    .project-stack {
+      display: flex; flex-wrap: wrap;
+      gap: 0.5rem; margin-bottom: 1.25rem;
+    }
+
+    .stack-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.05em;
+      background: var(--mist); color: var(--moss);
+      padding: 0.3rem 0.6rem; border-radius: 2px;
+      font-weight: 500;
+    }
+
+    .project-links { display: flex; gap: 1rem; }
+
+    .project-link {
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 500;
+      color: var(--moss);
+      border-bottom: 1px solid var(--leaf);
+      padding-bottom: 1px;
+    }
+
+    .replaced-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--leaf); color: var(--ink);
+      padding: 0.25rem 0.55rem;
+      margin-left: 0.5rem; border-radius: 2px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      body { padding: 2.5rem 1.25rem; }
+      .preview-headline { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-wrap">
+
+    <p class="preview-lead">Drop-in Preview</p>
+    <h1 class="preview-headline">Your portfolio, with the new XGBoost card in place</h1>
+    <p class="preview-note">
+      Below is your actual <code>.project-card</code> design from
+      <code>index.html</code>, with cards 03, 04, and 05 shown in context. Card
+      <strong>04</strong> is the one that replaces your current
+      &ldquo;Swedish Agriculture 2050 &mdash; ML Climate Impact Model&rdquo;
+      placeholder. Copy the snippet from <code>portfolio_snippet.html</code>
+      over your existing card-04 block in <code>index.html</code>.
+    </p>
+
+    <div class="projects-grid">
+
+      <!-- Card 03 (kept from your live site, for context) -->
+      <a class="project-card" href="#" onclick="return false">
+        <p class="project-num">03 / Published Analysis</p>
+        <h3 class="project-title">GHG Emissions &mdash; South American Wildfire Analysis</h3>
+        <p class="project-desc">20-year GHG accounting analysis of South American savanna wildfire emissions using GFED4 satellite data. Applied GHG Protocol methodology to quantify CO&#x2082;, CH&#x2084;, and N&#x2082;O emissions 1997&ndash;2016.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">NumPy</span>
+          <span class="stack-tag">HDF5</span>
+          <span class="stack-tag">GFED4</span>
+          <span class="stack-tag">GHG Protocol</span>
+        </div>
+        <div class="project-links">
+          <span class="project-link">View Analysis &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Card 04 — NEW, this is the replacement -->
+      <a class="project-card" href="https://github.com/upasanasen/xgboost-sweden-agriculture" target="_blank">
+        <p class="project-num">04 / Policy Brief &middot; Live on GitHub <span class="replaced-tag">New</span></p>
+        <h3 class="project-title">Forecasting Swedish Crop Yields to 2050 &mdash; XGBoost &amp; SHAP</h3>
+        <p class="project-desc">Reproduced a Lund master&rsquo;s thesis baseline on Swedish county-level crop yields (21 l&auml;n &times; 18 crops &times; 55 years) and extended it with SHAP explainability, four-model comparison, holdout-tuned hyperparameters, and an interactive RCP&nbsp;8.5 choropleth. Test MAE&nbsp;353&nbsp;kg/ha, R&sup2;&nbsp;0.98. Packaged as a decision-ready brief for N&auml;ringsdepartementet.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">XGBoost</span>
+          <span class="stack-tag">SHAP</span>
+          <span class="stack-tag">Plotly</span>
+          <span class="stack-tag">Climate Policy</span>
+        </div>
+        <div class="project-links">
+          <span class="project-link">Open Full Study &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Card 05 (kept from your live site, for context) -->
+      <a class="project-card" href="#" onclick="return false">
+        <p class="project-num">05 / In Development</p>
+        <h3 class="project-title">Building LCA Carbon Calculator &mdash; EN 15978</h3>
+        <p class="project-desc">Lifecycle carbon calculator for buildings following EN 15978 standard &mdash; covering stages A1&ndash;A5, B6, and C. Outputs stage-by-stage carbon profile with EPD material factors and comparison against Boverket klimatdeklaration benchmarks.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Streamlit</span>
+          <span class="stack-tag">EN 15978</span>
+          <span class="stack-tag">EPD Data</span>
+          <span class="stack-tag">Boverket</span>
+        </div>
+        <div class="project-links">
+          <span class="project-link">Coming Soon &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</body>
+</html>
