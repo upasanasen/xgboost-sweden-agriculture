@@ -12,10 +12,17 @@ Reproduction and extension of Ebrahimi (2022), *"Modeling crop yield in Sweden a
 |---|---|
 | **Problem** | Forecast Swedish county-level crop yields to the 2050s under the RCP 8.5 climate scenario |
 | **Data** | 21 counties × 18 crops × 55 years (1965–2019); 101 agro-climatic features from ClimateEU v4.63; SCB PxWeb crop-yield series |
+| **Data actually used** | ⚠️ The committed runs use the **synthetic reproduction dataset** (`scripts/generate_synthetic_data.py`), not the live SCB + ClimateEU pull. See [Known limitations](#known-limitations) |
 | **Model** | XGBoost 3.2 gradient-boosted regression, 5-fold CV, holdout-tuned |
-| **Accuracy** | Test MAE 353 kg/ha · R² 0.98 |
+| **Accuracy** | Test MAE 353 kg/ha · R² 0.98 — **measured on the synthetic reproduction data; indicative, not definitive** |
 | **2050 outlook** | Range −3.7% (spring grain) to +8.0% (mixed grain); modest mean change; strong northward shift |
 | **Audience** | Näringsdepartementet, Jordbruksverket, Länsstyrelserna |
+
+> **On the numbers in this README.** Every figure below comes from a pipeline run on
+> the synthetic reproduction dataset, which rebuilds the training target from published
+> county yield averages plus ClimateEU residuals. The modelling, tuning and SHAP work is
+> real; the absolute error figures are not a measurement of real Swedish yields. Run
+> `scripts/fetch_real_data.py` first for production-grade numbers.
 
 ## What's in here
 
@@ -69,7 +76,10 @@ python pipeline.py --stage all                   # runs prepare → baselines �
 python make_choropleth.py                        # builds the maps
 ```
 
-Stages are checkpointed to `outputs/checkpoints/`. To re-run a single stage:
+Stages are checkpointed to `outputs/checkpoints/`, which the pipeline creates on
+first run. Those caches (~21 MB of `.pkl`/`.npz`) are **gitignored** — they are
+regenerated locally and nothing outside `pipeline.py` reads them. To re-run a
+single stage:
 
 ```bash
 python pipeline.py --stage xgb      # only the XGBoost training + tuning
@@ -89,6 +99,9 @@ The fetcher hits the SCB PxWeb JSON endpoint for crop yields (1965 onward) and m
 ## Key results
 
 ### Model accuracy
+
+*Synthetic reproduction data — use these to compare models against each
+other, not as an estimate of real-world forecast error.*
 
 | Model | CV MAE | CV R² | Test MAE | Test R² |
 |---|---:|---:|---:|---:|
